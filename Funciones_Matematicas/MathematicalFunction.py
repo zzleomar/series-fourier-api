@@ -24,7 +24,7 @@ class MathematicalFunction(IFunction, ABC):
         # Integración numérica para calcular coeficientes
         N_samples = 1000
         dt = T / N_samples
-        t_samples = np.linspace(0, T, N_samples)
+        t_samples = np.linspace(0, T, N_samples, endpoint=False)
         
         # Componente DC (a0)
         f_samples = [self.evaluate(t) for t in t_samples]

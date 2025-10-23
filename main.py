@@ -158,17 +158,28 @@ async def analyze_function(request: FunctionRequest):
         # Crear la función según el tipo
         if request.function_type == "Personalizada":
             if not request.expression:
-                raise HTTPException(status_code=400, detail="Se requiere 'expression' para funciones personalizadas")
+                raise HTTPException(status_code=400, detail="Se requiere una expresión matemática para funciones personalizadas")
+
+            # Validar que la expresión no esté vacía o solo con espacios
+            if not request.expression.strip():
+                raise HTTPException(status_code=400, detail="La expresión matemática no puede estar vacía")
 
             # Validar expresión
             try:
                 function = CustomFunction(request.expression, request.amplitude, request.period)
-                # Probar evaluación
-                test_value = function.evaluate(0.0)
-                if not isinstance(test_value, (int, float)) or math.isnan(test_value) or math.isinf(test_value):
-                    raise ValueError("Expresión inválida")
+
+                # Probar evaluación en múltiples puntos para detectar errores
+                test_points = [0.0, 0.5, 1.0]
+                for t_test in test_points:
+                    test_value = function.evaluate(t_test)
+                    if not isinstance(test_value, (int, float)) or math.isnan(test_value) or math.isinf(test_value):
+                        raise ValueError(f"La expresión produce valores no válidos (NaN o infinito) en t={t_test}")
+
+            except ValueError as e:
+                # ValueError ya tiene mensajes descriptivos de CustomFunction
+                raise HTTPException(status_code=400, detail=str(e))
             except Exception as e:
-                raise HTTPException(status_code=400, detail=f"Expresión inválida: {str(e)}")
+                raise HTTPException(status_code=400, detail=f"Error al procesar la expresión: {str(e)}")
         else:
             function = PredefinedFunction(request.function_type, request.amplitude, request.period)
 

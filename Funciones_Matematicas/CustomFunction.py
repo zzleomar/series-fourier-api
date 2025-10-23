@@ -45,8 +45,21 @@ class CustomFunction(MathematicalFunction):
                 'A': self.amplitude,
                 'T': self.period
             }
-            
+
             result = eval(self.compiled_expr, {"__builtins__": {}}, namespace)
-            return float(result) if result is not None else 0.0
-        except:
-            return 0.0
+            if result is None:
+                raise ValueError("La expresión retorna None. Asegúrate de que la expresión devuelva un valor numérico.")
+            return float(result)
+        except SyntaxError as e:
+            raise ValueError(f"Error de sintaxis en la expresión: '{self.expression}'. Verifica que esté bien escrita.")
+        except NameError as e:
+            variable = str(e).split("'")[1] if "'" in str(e) else "desconocida"
+            raise ValueError(f"Variable o función '{variable}' no reconocida. Usa: t, A, T, sin, cos, tan, exp, log, sqrt, abs, pi, e")
+        except ZeroDivisionError:
+            raise ValueError(f"División por cero en la expresión para t={t}")
+        except TypeError as e:
+            raise ValueError(f"Error de tipo en la expresión: {str(e)}. Verifica que todas las operaciones sean válidas.")
+        except ValueError as e:
+            raise ValueError(f"Error al evaluar la expresión: {str(e)}")
+        except Exception as e:
+            raise ValueError(f"Error inesperado al evaluar '{self.expression}': {str(e)}")
