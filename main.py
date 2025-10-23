@@ -27,11 +27,11 @@ app = FastAPI(
     redoc_url="/api/redoc"
 )
 
-# Configurar CORS para permitir acceso desde Next.js
+# Configurar CORS para permitir acceso desde cualquier origen
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # Frontend Next.js
-    allow_credentials=True,
+    allow_origins=["*"],  # Permite todos los orígenes
+    allow_credentials=False,  # Debe ser False cuando allow_origins es ["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
