@@ -9,21 +9,30 @@ api/
 ├── main.py                     # Punto de entrada de la API FastAPI
 ├── requirements.txt            # Dependencias del proyecto
 ├── run.sh                      # Script de arranque
+├── Dockerfile                  # Configuración de Docker
+├── .dockerignore               # Archivos excluidos de Docker
+├── .gitignore                  # Archivos excluidos de Git
 ├── __init__.py
-├── Analisis_de_Fourier/       # Módulo de análisis de Fourier
-│   ├── FourierAnalysis.py
-│   ├── FourierSynthesizer.py
-│   ├── IFourierAnalyzer.py
-│   └── __init__.py
-├── Funciones_Matematicas/     # Módulo de funciones matemáticas
-│   ├── CustomFunction.py
-│   ├── IFunction.py
-│   ├── MathematicalFunction.py
-│   ├── PredefinedFunction.py
-│   └── __init__.py
-└── Modelos_de_Datos/          # Modelos de datos
-    ├── FunctionParameters.py
-    └── __init__.py
+├── README.md                   # Documentación del proyecto
+├── README_DEPLOY.md            # Guía de despliegue
+├── test_api_errors.py          # Tests de errores de la API
+├── test_error_handling.py      # Tests de manejo de errores
+├── Analisis_de_Fourier/        # Módulo de análisis de Fourier
+│   ├── __init__.py
+│   ├── FourierAnalysis.py      # Análisis de series de Fourier
+│   ├── FourierSynthesizer.py   # Síntesis de señales
+│   └── IFourierAnalyzer.py     # Interfaz del analizador
+├── Funciones_Matematicas/      # Módulo de funciones matemáticas
+│   ├── __init__.py
+│   ├── CustomFunction.py       # Funciones personalizadas
+│   ├── IFunction.py            # Interfaz de funciones
+│   ├── MathematicalFunction.py # Funciones matemáticas base
+│   └── PredefinedFunction.py   # Funciones predefinidas
+├── Modelos_de_Datos/           # Modelos de datos
+│   ├── __init__.py
+│   └── FunctionParameters.py   # Parámetros de funciones
+├── api/                        # Submódulo API (legacy)
+└── venv/                       # Entorno virtual Python
 ```
 
 ## Instalación y Ejecución
